@@ -9,6 +9,9 @@ class Person(TimeDependent):
     def on_time_step(self):
         self.attributes.on_timestep()
 
+    def on_event_complete(self, duration):
+        pass
+
 
 class PersonAttributes(object):
     def __init__(self):
