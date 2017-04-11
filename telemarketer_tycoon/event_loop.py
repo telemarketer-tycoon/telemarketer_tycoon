@@ -3,6 +3,18 @@ import time
 from typing import List
 
 
+class TimeDependent(metaclass=abc.ABCMeta):
+    def __init__(self):
+        event_loop.add_listener(self)
+
+    @abc.abstractmethod
+    def on_time_step(self):
+        return NotImplemented
+
+    def stop(self):
+        event_loop.remove_listener(self)
+
+
 class EventLoop(object):
     def __init__(self):
         self.listeners: List[TimeDependent] = []
@@ -20,13 +32,10 @@ class EventLoop(object):
     def add_listener(self, listener: TimeDependent):
         self.listeners.append(listener)
 
+    def remove_listener(self, listener: TimeDependent):
+        self.listeners.remove(listener)
+
 event_loop = EventLoop()
 
 
-class TimeDependent(metaclass=abc.ABCMeta):
-    def __init__(self):
-        event_loop.add_listener(self)
 
-    @abc.abstractmethod
-    def on_time_step(self):
-        return NotImplemented
