@@ -22,9 +22,17 @@ class EventLoop(object):
 
     def run(self):
         while True:
-            for listener in self.listeners:
-                listener.on_time_step()
-            self.sleep()
+            self.run_single_step()
+
+    def run_for(self, time_steps):
+        for _ in range(time_steps):
+            self.run_single_step()
+
+
+    def run_single_step(self):
+        for listener in self.listeners:
+            listener.on_time_step()
+        self.sleep()
 
     def sleep(self):
         time.sleep(self.sleep_time)
