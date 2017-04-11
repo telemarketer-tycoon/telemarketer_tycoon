@@ -20,4 +20,4 @@ class PersonEvent(TimeDependent):
     def event_ended(self) -> bool:
         """Uses `self.expected_duration` to randomly end, or not
         """
-        return random.random() > 1.0 / float(self.duration)
+        return random.random() < 1 / self.expected_duration
