@@ -4,3 +4,6 @@ class Company(object):
 
     def add_employee(self, person):
         self.employees.append(person)
+
+    def wages(self):
+        return sum(e.wage for e in self.employees)
