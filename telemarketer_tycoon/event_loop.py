@@ -18,7 +18,7 @@ class TimeDependent(metaclass=abc.ABCMeta):
 class EventLoop(object):
     def __init__(self):
         self.listeners: List[TimeDependent] = []
-        self.sleep_time = 0.01
+        self.sleep_time = 0.1
 
     def run(self):
         while True:
