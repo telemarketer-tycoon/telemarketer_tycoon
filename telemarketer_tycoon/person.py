@@ -7,6 +7,10 @@ from telemarketer_tycoon.stats import stat_logger
 
 class Person(TimeDependent):
 
+    def __init__(self):
+        super().__init__()
+        self.wage = settings.CALLER_WEEKLY_WAGE
+
     def on_time_step(self):
         num_calls = self.num_calls_made()
         money_made = settings.PRODUCT_VALUE * num_calls * self.success_rate()

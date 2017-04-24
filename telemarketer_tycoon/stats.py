@@ -16,11 +16,15 @@ class StatLogger(object):
         self.money_by_caller[caller] += money_made
         self._total_money += money_made
 
+    def subtract_money(self, amount):
+        self._total_money -= amount
+        return self._total_money
+
     def total_money(self):
-        return f'£{ self._total_money : ,}'
+        return self._total_money
 
     def total_calls_made(self):
-        return f'{ sum(self.calls_by_caller.values()) : ,}'
+        return sum(self.calls_by_caller.values())
 
 
 stat_logger = StatLogger()
