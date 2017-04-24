@@ -13,7 +13,7 @@ class Person(TimeDependent):
 
     def on_time_step(self):
         num_calls = self.num_calls_made()
-        money_made = settings.PRODUCT_VALUE * num_calls * self.success_rate()
+        money_made = int(settings.PRODUCT_VALUE * num_calls * self.success_rate())
         stat_logger.record_calls(self, num_calls)
         stat_logger.record_money_generated(self, money_made)
 
