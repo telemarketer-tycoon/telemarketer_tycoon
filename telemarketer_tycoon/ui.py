@@ -29,16 +29,16 @@ class GamePrompt(Cmd):
         return self.do_hire(args)
 
     def do_fire(self, args):
-        """Fire a caller (give their name)
+        """Fire a caller (give their number)
         
         e.g. > fire 2
         """
-        if len(args) == 0:
-            print("Please give the callers name")
+        if len(args) == 0 or not args.isdigit():
+            print("Please give the callers employee number")
             return False
-        return self.game.fire_caller(args[0])
+        return self.game.fire_caller(int(args))
 
-    def do_stats(self, args):
+    def do_callers(self, args):
         """Display caller stats"""
         return self.game.print_caller_stats()
 
