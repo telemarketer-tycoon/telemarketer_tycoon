@@ -19,7 +19,7 @@ class Person(TimeDependent):
         stat_logger.record_money_generated(self, money_made)
 
     def num_calls_made(self):
-        return np.random.poisson(self.call_efficiency * 100)
+        return np.random.poisson(self.call_efficiency * 133)
 
     def success_rate(self):
         return np.random.uniform(0, 0.025)
