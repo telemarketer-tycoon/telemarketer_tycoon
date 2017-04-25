@@ -30,6 +30,9 @@ class Game(object):
             self.print_total_money()
             return False
 
+    def fire_caller(self, name):
+        return self.company.fire_employee(name)
+
     def pay_wages(self):
         stat_logger.subtract_money(self.company.wages())
 
@@ -56,8 +59,8 @@ class Game(object):
             raise GameOver
 
     def print_caller_stats(self):
-        for employee in self.company.employees:
-            print(f'\nCaller: {employee.name}')
+        for name, employee in self.company.employees.items():
+            print(f'\nCaller: {name}')
             print(f'Average calls a day: {stat_logger.avg_calls(employee) :,.1f}')
             print(f'Average turnover a day: £{stat_logger.avg_revenue(employee):,.2f}')
             print('\n')
