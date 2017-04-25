@@ -10,6 +10,7 @@ class Person(TimeDependent):
     def __init__(self):
         super().__init__()
         self.wage = settings.CALLER_WEEKLY_WAGE
+        self.call_efficiency = np.random.uniform(0.5, 1)
 
     def on_time_step(self):
         num_calls = self.num_calls_made()
@@ -18,7 +19,7 @@ class Person(TimeDependent):
         stat_logger.record_money_generated(self, money_made)
 
     def num_calls_made(self):
-        return np.random.poisson(100)
+        return np.random.poisson(self.call_efficiency * 100)
 
     def success_rate(self):
         return np.random.uniform(0, 0.025)
