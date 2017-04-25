@@ -7,3 +7,6 @@ class Company(object):
 
     def wages(self):
         return sum(e.wage for e in self.employees)
+
+    def num_employees(self):
+        return len(self.employees)

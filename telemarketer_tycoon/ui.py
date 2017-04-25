@@ -1,6 +1,8 @@
 import sys
 from cmd import Cmd
 
+from telemarketer_tycoon.exceptions import GameOver
+
 
 class GamePrompt(Cmd):
     def __init__(self, game):
@@ -29,5 +31,4 @@ class GamePrompt(Cmd):
 
     def do_quit(self, args):
         """Quit the game"""
-        print("GAME OVER")
-        return sys.exit(0)
+        raise GameOver
