@@ -1,5 +1,7 @@
 from collections import defaultdict
 
+import numpy as np
+
 from telemarketer_tycoon import settings
 
 
@@ -38,6 +40,14 @@ class StatLogger(object):
             sum(revenue_per_day[-5:]) for revenue_per_day in
             self.caller_revenue_by_day.values()
         )
+
+    def avg_calls(self, employee):
+        calls = self.caller_calls_per_day[employee] or [0]
+        return np.mean(calls)
+
+    def avg_revenue(self, employee):
+        revenues = self.caller_revenue_by_day[employee] or [0]
+        return np.nanmean(revenues)
 
 
 stat_logger = StatLogger()

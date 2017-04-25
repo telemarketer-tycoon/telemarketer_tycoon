@@ -7,8 +7,9 @@ from telemarketer_tycoon.stats import stat_logger
 
 class Person(TimeDependent):
 
-    def __init__(self):
+    def __init__(self, name):
         super().__init__()
+        self.name = name
         self.wage = settings.CALLER_WEEKLY_WAGE
         self.call_efficiency = np.random.uniform(0.5, 1)
 

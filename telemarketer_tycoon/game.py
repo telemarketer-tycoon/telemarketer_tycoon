@@ -2,14 +2,13 @@ from telemarketer_tycoon import settings
 from telemarketer_tycoon.company import Company
 from telemarketer_tycoon.event_loop import event_loop
 from telemarketer_tycoon.exceptions import GameOver
-from telemarketer_tycoon.person import Person
 from telemarketer_tycoon.stats import stat_logger
 
 
 class Game(object):
     def __init__(self):
         self.company = Company()
-        self.company.add_employee(Person())
+        self.company.hire_employee()
         self.event_loop = event_loop
 
     def run_week(self):
@@ -26,7 +25,7 @@ class Game(object):
         else:
             stat_logger.subtract_money(settings.HIRING_COST)
             print("You hired a new caller!")
-            self.company.add_employee(Person())
+            self.company.hire_employee()
             self.print_callers()
             self.print_total_money()
             return False
@@ -55,3 +54,10 @@ class Game(object):
         if stat_logger.total_money() < 0:
             print('You ran out of money!\n\n')
             raise GameOver
+
+    def print_caller_stats(self):
+        for employee in self.company.employees:
+            print(f'\nCaller: {employee.name}')
+            print(f'Average calls a day: {stat_logger.avg_calls(employee) :,.1f}')
+            print(f'Average turnover a day: £{stat_logger.avg_revenue(employee):,.2f}')
+            print('\n')

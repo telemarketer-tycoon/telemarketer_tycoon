@@ -28,6 +28,10 @@ class GamePrompt(Cmd):
         """Hire a new caller"""
         return self.do_hire(args)
 
+    def do_stats(self, args):
+        """Display caller stats"""
+        return self.game.print_caller_stats()
+
     def do_quit(self, args):
         """Quit the game"""
         raise GameOver
