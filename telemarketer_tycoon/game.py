@@ -3,12 +3,13 @@ from telemarketer_tycoon.company import Company
 from telemarketer_tycoon.event_loop import event_loop
 from telemarketer_tycoon.exceptions import GameOver
 from telemarketer_tycoon.stats import stat_logger
+from telemarketer_tycoon.person import Person
 
 
 class Game(object):
     def __init__(self):
         self.company = Company()
-        self.company.hire_employee()
+        self.company.add_employee(Person('Dan', 0.8))
         self.event_loop = event_loop
 
     def run_week(self):

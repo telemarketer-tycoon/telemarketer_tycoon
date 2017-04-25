@@ -7,11 +7,11 @@ from telemarketer_tycoon.stats import stat_logger
 
 class Person(TimeDependent):
 
-    def __init__(self, name):
+    def __init__(self, name, call_efficiency=None):
         super().__init__()
         self.name = name
         self.wage = settings.CALLER_WEEKLY_WAGE
-        self.call_efficiency = np.random.uniform(0.5, 1)
+        self.call_efficiency = call_efficiency or np.random.uniform(0.5, 1)
 
     def on_time_step(self):
         num_calls = self.num_calls_made()
