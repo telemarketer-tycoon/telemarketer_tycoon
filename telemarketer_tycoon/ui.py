@@ -1,4 +1,3 @@
-import sys
 from cmd import Cmd
 
 from telemarketer_tycoon.exceptions import GameOver
