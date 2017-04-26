@@ -4,6 +4,7 @@ from telemarketer_tycoon import settings
 from telemarketer_tycoon.event_loop import TimeDependent
 from telemarketer_tycoon.bank import bank
 from telemarketer_tycoon.stats import stat_logger
+from telemarketer_tycoon import helpers
 
 
 class Person(TimeDependent):
@@ -13,7 +14,7 @@ class Person(TimeDependent):
         self.name = name
         self.wage = settings.CALLER_WEEKLY_WAGE
         self.call_efficiency = call_efficiency or np.random.uniform(0.5, 1)
-        self.weekly_chance_to_leave = chance_to_leave or np.random.uniform(0.01, 0.05)
+        self.weekly_chance_to_leave = chance_to_leave or np.random.uniform(0.001, 0.02)
 
     def on_time_step(self):
         num_calls = self.num_calls_made()
@@ -32,5 +33,4 @@ class Person(TimeDependent):
         return settings.FIRING_WEEKS_WAGES * self.wage
 
     def wants_to_hand_in_notice(self):
-        p = self.weekly_chance_to_leave
-        return np.random.choice([True, False], 1, p=[p, 1-p])
+        return helpers.binary_choice(probability_true=self.weekly_chance_to_leave)
