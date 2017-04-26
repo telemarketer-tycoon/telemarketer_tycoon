@@ -24,3 +24,6 @@ class Person(TimeDependent):
 
     def success_rate(self):
         return np.random.uniform(0, 0.025)
+
+    def firing_cost(self):
+        return settings.FIRING_WEEKS_WAGES * self.wage

@@ -1,11 +1,15 @@
+from telemarketer_tycoon import settings
 from telemarketer_tycoon.person import Person
+from typing import Dict
 from faker import Faker
+
+from telemarketer_tycoon.stats import stat_logger
 
 fake = Faker()
 
 class Company(object):
     def __init__(self):
-        self.employees = {}
+        self.employees: Dict[int, Person] = {}
         self._employee_number = 0
 
     def add_employee(self, person):
@@ -16,12 +20,15 @@ class Company(object):
         self.add_employee(Person(name))
 
     def fire_employee(self, e_num):
-        e = self.employees.pop(e_num, None)
-        if e is not None:
-            print(f"Sorry, {e.name}, you're outa here!")
-            e.stop()
-        else:
+        e = self.employees.get(e_num)
+        if e is None:
             print(f"Caller #{e_num} doesnt exist")
+        elif e.firing_cost() > stat_logger.total_money():
+            print(f"Not enough money to fire {e.name}! You need £{e.firing_cost():,}")
+        else:
+            print(f"Sorry, {e.name}, you're outa here!")
+            del self.employees[e_num]
+            e.stop()
         return False
 
     def wages(self):
