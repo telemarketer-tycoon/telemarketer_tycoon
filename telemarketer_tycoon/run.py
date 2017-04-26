@@ -18,7 +18,7 @@ if __name__ == "__main__":
         print(f'\n\n### WEEK {week_no} ###\n\n')
         try:
             game.run_week()
-            prompt.cmdloop('What do you want to do? (default continue)')
+            prompt.cmdloop('What do you want to do? (default continue, ? for options)')
         except GameOver:
             print("#### GAME OVER ####\n")
             break
