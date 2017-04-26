@@ -8,11 +8,12 @@ from telemarketer_tycoon.stats import stat_logger
 
 class Person(TimeDependent):
 
-    def __init__(self, name, call_efficiency=None):
+    def __init__(self, name, call_efficiency=None, chance_to_leave=None):
         super().__init__()
         self.name = name
         self.wage = settings.CALLER_WEEKLY_WAGE
         self.call_efficiency = call_efficiency or np.random.uniform(0.5, 1)
+        self.weekly_chance_to_leave = chance_to_leave or np.random.uniform(0.01, 0.05)
 
     def on_time_step(self):
         num_calls = self.num_calls_made()
@@ -26,3 +27,10 @@ class Person(TimeDependent):
 
     def success_rate(self):
         return np.random.uniform(0, 0.025)
+
+    def firing_cost(self):
+        return settings.FIRING_WEEKS_WAGES * self.wage
+
+    def wants_to_hand_in_notice(self):
+        p = self.weekly_chance_to_leave
+        return np.random.choice([True, False], 1, p=[p, 1-p])
