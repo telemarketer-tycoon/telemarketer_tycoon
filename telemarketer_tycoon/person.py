@@ -26,6 +26,9 @@ class Person(TimeDependent):
     def success_rate(self):
         return np.random.uniform(0, 0.025)
 
+    def firing_cost(self):
+        return settings.FIRING_WEEKS_WAGES * self.wage
+
     def wants_to_hand_in_notice(self):
         p = self.weekly_chance_to_leave
         return np.random.choice([True, False], 1, p=[p, 1-p])
