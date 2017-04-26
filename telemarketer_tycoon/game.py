@@ -61,7 +61,12 @@ class Game(object):
 
     def print_caller_stats(self):
         for e_num, employee in self.company.employees.items():
+            daily_wage = settings.CALLER_WEEKLY_WAGE / 5
+            daily_profit = stat_logger.avg_revenue(employee) - daily_wage
+
             print(f'\nCaller: {employee.name} ({e_num})')
-            print(f'Average calls a day: {stat_logger.avg_calls(employee) :,.1f}')
-            print(f'Average turnover a day: £{stat_logger.avg_revenue(employee):,.2f}')
+            print(f'Calls per day: {stat_logger.avg_calls(employee):,.1f}')
+            print(f'Daily turnover: £{stat_logger.avg_revenue(employee):,.2f}')
+            print(f'Daily wage: £{daily_wage:,.2f}')
+            print(f'Daily profit: £{daily_profit:,.2f}')
             print('\n')
