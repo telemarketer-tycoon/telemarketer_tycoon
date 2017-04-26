@@ -2,6 +2,7 @@ import numpy as np
 
 from telemarketer_tycoon import settings
 from telemarketer_tycoon.event_loop import TimeDependent
+from telemarketer_tycoon.bank import bank
 from telemarketer_tycoon.stats import stat_logger
 
 
@@ -18,6 +19,7 @@ class Person(TimeDependent):
         money_made = settings.PRODUCT_VALUE * int(num_calls * self.success_rate())
         stat_logger.record_calls(self, num_calls)
         stat_logger.record_money_generated(self, money_made)
+        bank.add_money(money_made)
 
     def num_calls_made(self):
         return np.random.poisson(self.call_efficiency * 133)
