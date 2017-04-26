@@ -11,13 +11,7 @@ if __name__ == "__main__":
         os.system('clear')
         print(f'\n\n### WEEK {week_no} ###\n\n')
         try:
-            game.event_loop.run_for(5)
-            game.display_week_info()
-
-            game.pay_wages()
-            game.print_total_money()
-            game.check_money()
-
+            game.run_week()
             prompt.cmdloop('What do you want to do? (default continue)')
         except GameOver:
             print("#### GAME OVER ####\n")
