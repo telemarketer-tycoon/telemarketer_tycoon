@@ -9,7 +9,10 @@ from telemarketer_tycoon.person import Person
 class Game(object):
     def __init__(self):
         self.company = Company()
-        self.company.add_employee(Person('Dan', 0.8))
+
+        dan_the_man = Person('Dan', 0.8)
+        dan_the_man.weekly_chance_to_leave = 0
+        self.company.add_employee(dan_the_man)
         self.event_loop = event_loop
 
     def run_week(self):
@@ -18,6 +21,7 @@ class Game(object):
         self.pay_wages()
         self.print_total_money()
         self.check_money()
+        self.company.check_notice_hand_ins()
 
     def employee_hiring(self):
         if stat_logger.total_money() < settings.HIRING_COST:

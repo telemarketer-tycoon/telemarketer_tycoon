@@ -32,6 +32,14 @@ class Company(object):
             e.stop()
         return False
 
+    def check_notice_hand_ins(self):
+        """Check if any employees have handed in their notice periods."""
+        for e_id in list(self.employees.keys()):  # cant iterate and modify
+            e = self.employees[e_id]
+            if e.wants_to_hand_in_notice():
+                self.employees.pop(e_id)
+                print(f">>> {e.name}, left to become a teacher.")
+
     def wages(self):
         return sum(e.wage for e in self.employees.values())
 
