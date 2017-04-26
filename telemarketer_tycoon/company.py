@@ -22,11 +22,12 @@ class Company(object):
     def fire_employee(self, e_num):
         e = self.employees.get(e_num)
         if e is None:
-            print(f"Caller #{e_num} doesnt exist")
+            print(f"Caller #{e_num} doesn't exist")
         elif e.firing_cost() > stat_logger.total_money():
             print(f"Not enough money to fire {e.name}! You need £{e.firing_cost():,}")
         else:
-            print(f"Sorry, {e.name}, you're outa here!")
+            print(f"Sorry, {e.name}, you're outta here!")
+            stat_logger.subtract_money(e.firing_cost())
             del self.employees[e_num]
             e.stop()
         return False
