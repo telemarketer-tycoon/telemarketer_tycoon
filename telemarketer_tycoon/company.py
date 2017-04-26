@@ -1,9 +1,7 @@
-from telemarketer_tycoon import settings
+from telemarketer_tycoon.bank import bank
 from telemarketer_tycoon.person import Person
 from typing import Dict
 from faker import Faker
-
-from telemarketer_tycoon.stats import stat_logger
 
 fake = Faker()
 
@@ -23,19 +21,18 @@ class Company(object):
         e = self.employees.get(e_num)
         if e is None:
             print(f"Caller #{e_num} doesn't exist")
-        elif e.firing_cost() > stat_logger.total_money():
+        elif e.firing_cost() > bank.total:
             print(f"Not enough money to fire {e.name}! You need £{e.firing_cost():,}")
         else:
             print(f"Sorry, {e.name}, you're outta here!")
-            stat_logger.subtract_money(e.firing_cost())
+            bank.subtract_money(e.firing_cost())
             del self.employees[e_num]
             e.stop()
         return False
 
     def check_notice_hand_ins(self):
         """Check if any employees have handed in their notice periods."""
-        for e_id in list(self.employees.keys()):  # cant iterate and modify
-            e = self.employees[e_id]
+        for e_id, e in list(self.employees.items()):  # cant iterate and modify
             if e.wants_to_hand_in_notice():
                 self.employees.pop(e_id)
                 print(f">>> {e.name}, left to become a teacher.")
