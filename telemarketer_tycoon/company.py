@@ -32,7 +32,7 @@ class Company(object):
 
     def check_notice_hand_ins(self):
         """Check if any employees have handed in their notice periods."""
-        for e_id, e in self.employees.items():  # cant iterate and modify
+        for e_id, e in list(self.employees.items()):  # cant iterate and modify
             if e.wants_to_hand_in_notice():
                 self.employees.pop(e_id)
                 print(f">>> {e.name}, left to become a teacher.")
