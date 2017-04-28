@@ -1,4 +1,4 @@
-from telemarketer_tycoon import settings
+from telemarketer_tycoon import settings, ui
 from telemarketer_tycoon.bank import bank
 from telemarketer_tycoon.company import Company
 from telemarketer_tycoon.event_loop import event_loop
@@ -6,6 +6,7 @@ from telemarketer_tycoon.exceptions import GameOver
 from telemarketer_tycoon.stats import stat_logger
 from telemarketer_tycoon.person import Person
 from telemarketer_tycoon import events
+from terminaltables import AsciiTable
 
 
 class Game(object):
@@ -73,12 +74,10 @@ class Game(object):
 
     def print_caller_stats(self):
         for e_num, employee in self.company.employees.items():
-            daily_wage = settings.CALLER_WEEKLY_WAGE / 5
-            daily_profit = stat_logger.avg_revenue(employee) - daily_wage
+            stats_table = AsciiTable(stat_logger.stats_table(employee))
 
+            print('#################################')
             print(f'\nCaller: {employee.name} ({e_num})')
-            print(f'Calls per day: {stat_logger.avg_calls(employee):,.1f}')
-            print(f'Daily turnover: £{stat_logger.avg_revenue(employee):,.2f}')
-            print(f'Daily wage: £{daily_wage:,.2f}')
-            print(f'Daily profit: £{daily_profit:,.2f}')
-            print('\n')
+            print(f'Weekly pay: {ui.format_money(employee.wage)}\n\n')
+            print(f'Daily averages:\n{stats_table.table}')
+            print('\n#################################\n')

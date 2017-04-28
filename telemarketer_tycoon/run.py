@@ -1,7 +1,7 @@
 import os
 from telemarketer_tycoon.exceptions import GameOver
 from telemarketer_tycoon.game import Game
-from telemarketer_tycoon.ui import GamePrompt
+from telemarketer_tycoon.prompt import GamePrompt
 from telemarketer_tycoon.logo import logo
 
 def play_intro():
