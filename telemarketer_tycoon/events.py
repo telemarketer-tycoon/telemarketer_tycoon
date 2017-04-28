@@ -34,6 +34,6 @@ class TeacherRecruitingDrive(Event):
         print(f"The local school upped their recruiting efforts, {num_leavers} employees quit.")
 
         for _ in range(num_leavers):
-            e_id = random.choice(list(company.employees.keys()))
-            e = company.employees.pop(e_id)
+            e_id, e = random.choice(list(company.employees.items()))
+            company.remove_employee(e_id)
             print(f" - {e.name} is outta here!")

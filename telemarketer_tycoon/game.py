@@ -31,16 +31,9 @@ class Game(object):
         self.check_events_occured()
 
     def employee_hiring(self):
-        if bank.total < settings.HIRING_COST:
-            print(f"You need £{settings.HIRING_COST:,} to hire a new caller!")
-            return False
-        else:
-            bank.subtract_money(settings.HIRING_COST)
-            print("You hired a new caller!")
-            self.company.hire_employee()
-            self.print_callers()
-            self.print_total_money()
-            return False
+        self.company.hire_employee()
+        self.print_callers()
+        self.print_total_money()
 
     def fire_caller(self, e_num):
         return self.company.fire_employee(e_num)
