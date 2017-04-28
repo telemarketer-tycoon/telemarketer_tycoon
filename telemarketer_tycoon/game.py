@@ -5,6 +5,7 @@ from telemarketer_tycoon.event_loop import event_loop
 from telemarketer_tycoon.exceptions import GameOver
 from telemarketer_tycoon.stats import stat_logger
 from telemarketer_tycoon.person import Person
+from telemarketer_tycoon import events
 
 
 class Game(object):
@@ -16,6 +17,10 @@ class Game(object):
         self.company.add_employee(dan_the_man)
         self.event_loop = event_loop
 
+        self.events = [
+            events.TeacherRecruitingDrive()
+        ]
+
     def run_week(self):
         self.event_loop.run_for(5)
         self.display_week_info()
@@ -23,18 +28,12 @@ class Game(object):
         self.print_total_money()
         self.check_money()
         self.company.check_notice_hand_ins()
+        self.check_events_occured()
 
     def employee_hiring(self):
-        if bank.total < settings.HIRING_COST:
-            print(f"You need £{settings.HIRING_COST:,} to hire a new caller!")
-            return False
-        else:
-            bank.subtract_money(settings.HIRING_COST)
-            print("You hired a new caller!")
-            self.company.hire_employee()
-            self.print_callers()
-            self.print_total_money()
-            return False
+        self.company.hire_employee()
+        self.print_callers()
+        self.print_total_money()
 
     def fire_caller(self, e_num):
         return self.company.fire_employee(e_num)
@@ -63,6 +62,14 @@ class Game(object):
         if bank.total < 0:
             print('You ran out of money!\n\n')
             raise GameOver
+
+    def check_events_occured(self):
+        for event in self.events:
+            if event.triggered(self.company):
+                print("########### Something Happened! ###########")
+                event.action(self.company)
+                print("###########################################")
+                break  # max 1 event per week
 
     def print_caller_stats(self):
         for e_num, employee in self.company.employees.items():

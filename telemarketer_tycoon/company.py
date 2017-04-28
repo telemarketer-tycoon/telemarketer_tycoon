@@ -1,3 +1,4 @@
+from telemarketer_tycoon import settings
 from telemarketer_tycoon.bank import bank
 from telemarketer_tycoon.person import Person
 from typing import Dict
@@ -13,9 +14,18 @@ class Company(object):
     def add_employee(self, person):
         self.employees[self.get_next_employee_number()] = person
 
+    def remove_employee(self, e_num):
+        e = self.employees.pop(e_num)
+        e.stop()
+
     def hire_employee(self):
-        name = fake.name()
-        self.add_employee(Person(name))
+        if bank.total < settings.HIRING_COST:
+            print(f"You need £{settings.HIRING_COST:,} to hire a new caller!")
+        else:
+            bank.subtract_money(settings.HIRING_COST)
+            name = fake.name()
+            print(f"Welcome on board {name}!")
+            self.add_employee(Person(name))
 
     def fire_employee(self, e_num):
         e = self.employees.get(e_num)
@@ -26,8 +36,7 @@ class Company(object):
         else:
             print(f"Sorry, {e.name}, you're outta here!")
             bank.subtract_money(e.firing_cost())
-            del self.employees[e_num]
-            e.stop()
+            self.remove_employee(e_num)
         return False
 
     def check_notice_hand_ins(self):
