@@ -14,7 +14,7 @@ class Person(TimeDependent):
         self.name = name
         self.wage = settings.CALLER_WEEKLY_WAGE
         self.call_efficiency = call_efficiency or np.random.uniform(0.5, 1)
-        self.weekly_chance_to_leave = chance_to_leave or np.random.uniform(0.001, 0.02)
+        self.weekly_chance_to_leave = chance_to_leave or np.random.uniform(0.001, 0.002)
 
     def on_time_step(self):
         num_calls = self.num_calls_made()

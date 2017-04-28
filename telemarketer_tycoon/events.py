@@ -21,7 +21,7 @@ class Event(object):
 
 
 class TeacherRecruitingDrive(Event):
-    trigger_chance = 0.01
+    trigger_chance = 0.001
 
     def triggered(self, company):
         num_employees = len(company.employees)
